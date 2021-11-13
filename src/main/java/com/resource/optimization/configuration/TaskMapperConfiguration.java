@@ -17,6 +17,7 @@ public class TaskMapperConfiguration {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
                         .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins("https://resource-optimization-frontend.herokuapp.com/")
                         .allowedMethods("PUT", "DELETE", "GET", "POST", "OPTIONS")
                         .allowedHeaders("Accept", "Content-Type", "Origin")
                         .exposedHeaders("header1", "header2")
