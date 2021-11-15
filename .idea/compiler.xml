@@ -8,11 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="optimization" />
+        <module name="ResourcesOptomizationServer" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ResourcesOptomizationServer" options="-parameters" />
       <module name="optimization" options="-parameters" />
     </option>
   </component>
