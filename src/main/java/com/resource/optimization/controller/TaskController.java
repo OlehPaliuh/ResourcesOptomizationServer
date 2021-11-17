@@ -44,14 +44,14 @@ public class TaskController {
     }
 
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    @PutMapping(path = "/task/{taskId}", produces = "application/json", consumes = "application/json")
+    @PutMapping(path = "/tasks/{taskId}", produces = "application/json", consumes = "application/json")
     public @ResponseBody
     ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody CreateTaskDto taskDto) {
         return new ResponseEntity<>(taskService.updateTask(taskDto, taskId), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    @DeleteMapping(path = "/task/{taskId}")
+    @DeleteMapping(path = "/tasks/{taskId}")
     public @ResponseBody
     void deleteTask(@PathVariable Long taskId) {
         taskService.deleteTask(taskId);
