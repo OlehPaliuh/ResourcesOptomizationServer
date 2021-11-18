@@ -2,7 +2,7 @@ package com.resource.optimization.service;
 
 import com.resource.optimization.entity.Task;
 import com.resource.optimization.entity.dto.CreateTaskDto;
-import com.resource.optimization.exception.NotFoundException;
+import com.resource.optimization.exception.common.NotFoundException;
 import com.resource.optimization.repository.TaskRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -40,6 +41,10 @@ public class Account {
 
     @Column(name = "refresh_token_key", nullable = false)
     private String refreshTokenKey;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Project> ownProjects;
 
 //    @ManyToOne
 //    @NotNull

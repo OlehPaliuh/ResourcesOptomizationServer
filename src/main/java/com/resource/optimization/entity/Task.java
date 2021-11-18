@@ -1,5 +1,6 @@
 package com.resource.optimization.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,6 +8,8 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,12 +22,30 @@ public class Task implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = FieldNames.NAME)
     private String name;
 
-    @Column(name = "cost")
+    @Column(name = FieldNames.COST)
     private Double cost;
 
-    @Column(name = "type")
+    @Column(name = FieldNames.TYPE)
     private String type;
+
+    @Column(name = FieldNames.MIN_IMPLEMENTATION_COST)
+    private Integer minimumImplementationCost;
+
+    @Column(name = FieldNames.MAX_IMPLEMENTATION_COST)
+    private Integer maximumImplementationCost;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tasks")
+    @JsonIgnore
+    private List<Project> projects;
+
+    private static class FieldNames {
+        public static final String NAME = "name";
+        public static final String COST = "cost";
+        public static final String TYPE = "type";
+        public static final String MIN_IMPLEMENTATION_COST = "minimumImplementationCost";
+        public static final String MAX_IMPLEMENTATION_COST = "maximumImplementationCost";
+    }
 }
