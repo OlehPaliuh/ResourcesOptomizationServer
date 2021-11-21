@@ -1,5 +1,6 @@
 package com.resource.optimization.entity.dto;
 
+import com.resource.optimization.entity.enums.PhaseType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,10 +15,8 @@ public class CreateTaskDto {
     private Integer taskId;
     @NotEmpty
     private String name;
-    @NotEmpty(message = "Type is required")
-    private String type;
-    @NotNull
-    private Double cost;
+    @NotNull(message = "Type is required")
+    private PhaseType type;
     @NotNull
     private Integer minimumImplementationCost;
     @NotNull

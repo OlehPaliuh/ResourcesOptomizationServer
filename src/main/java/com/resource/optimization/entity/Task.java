@@ -1,6 +1,7 @@
 package com.resource.optimization.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.resource.optimization.entity.enums.PhaseType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,7 +9,6 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,11 +25,8 @@ public class Task implements Serializable {
     @Column(name = FieldNames.NAME)
     private String name;
 
-    @Column(name = FieldNames.COST)
-    private Double cost;
-
     @Column(name = FieldNames.TYPE)
-    private String type;
+    private PhaseType type;
 
     @Column(name = FieldNames.MIN_IMPLEMENTATION_COST)
     private Integer minimumImplementationCost;
@@ -39,6 +36,7 @@ public class Task implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tasks")
     @JsonIgnore
+    @ToString.Exclude
     private List<Project> projects;
 
     private static class FieldNames {

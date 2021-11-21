@@ -46,16 +46,20 @@ public class TaskService {
     }
 
     private void update(Task currentTask, Task updateTask) {
-        if (updateTask.getCost() != null && !currentTask.getCost().equals(updateTask.getCost())) {
-            currentTask.setCost(updateTask.getCost());
-        }
-
         if (updateTask.getName() != null && !currentTask.getName().equals(updateTask.getName())) {
             currentTask.setName(updateTask.getName());
         }
 
         if (updateTask.getType() != null && !currentTask.getType().equals(updateTask.getType())) {
             currentTask.setType(updateTask.getType());
+        }
+
+        if (updateTask.getMinimumImplementationCost() != null && !currentTask.getMinimumImplementationCost().equals(updateTask.getMinimumImplementationCost())) {
+            currentTask.setMinimumImplementationCost(updateTask.getMinimumImplementationCost());
+        }
+
+        if (updateTask.getMaximumImplementationCost() != null && !currentTask.getMaximumImplementationCost().equals(updateTask.getMaximumImplementationCost())) {
+            currentTask.setMaximumImplementationCost(updateTask.getMaximumImplementationCost());
         }
     }
 }
