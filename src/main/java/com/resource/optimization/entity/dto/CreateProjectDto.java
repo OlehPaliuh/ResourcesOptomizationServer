@@ -16,7 +16,7 @@ public class CreateProjectDto {
     private String name;
 
     @NotNull
-    private Double finalCost;
+    private Float finalCost;
 
     private List<CreateTaskDto> tasks;
 }

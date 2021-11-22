@@ -1,5 +1,6 @@
 package com.resource.optimization.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +26,7 @@ public class Project implements Serializable {
     private String name;
 
     @Column(name = FieldNames.FINAL_COST)
-    private Double finalCost;
+    private Float finalCost;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -35,6 +36,9 @@ public class Project implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Task> tasks;
+
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ProjectOptimization> ownProjectOptimizations;
 
     private static class FieldNames {
         public static final String NAME = "name";

@@ -18,7 +18,7 @@ public class CreateTaskDto {
     @NotNull(message = "Type is required")
     private PhaseType type;
     @NotNull
-    private Integer minimumImplementationCost;
+    private Float minimumImplementationCost;
     @NotNull
-    private Integer maximumImplementationCost;
+    private Float maximumImplementationCost;
 }
