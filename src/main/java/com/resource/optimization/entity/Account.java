@@ -46,14 +46,6 @@ public class Account {
     @JsonIgnore
     private List<Project> ownProjects;
 
-//    @ManyToOne
-//    @NotNull
-//    @JoinColumn(name = "account_role_id")
-//    private Role role;
-
-//    @ManyToOne
-//    @NotNull
-//    @JoinColumn(name = "account_role_id")
     private RoleName role;
 
     private String firstName;

@@ -13,8 +13,6 @@ public class MinimizationServiceImpl implements MinimizationService {
     Float eps;
 
     List<PhaseOptimizationItem> phaseOptimizationItems;
-//    List<Task> tasks;
-//    Project project;
 
     List<Float> optimizedValues;
     List<Float> tempOptimizedValues;
@@ -30,9 +28,6 @@ public class MinimizationServiceImpl implements MinimizationService {
     public List<PhaseOptimizationItem> calculateMinimization() {
         optimizedValues = roundListValues(generateValuesForOptimization(), 2);
 
-        System.out.println("Initial Array:");
-        optimizedValues.forEach(item -> System.out.println(item + "  "));
-
         tempOptimizedValues = new ArrayList<>(numberOfStages);
 
         for (int i = 0; i < numberOfStages; ++i) {
@@ -40,7 +35,6 @@ public class MinimizationServiceImpl implements MinimizationService {
         }
 
         float initialOptimizationFunction = minimizationFunction(optimizedValues);
-        System.out.println("initialOptimizationFunction " + initialOptimizationFunction);
         Float minimalOptimization = initialOptimizationFunction;
 
         int stepSign = 1;
@@ -62,14 +56,7 @@ public class MinimizationServiceImpl implements MinimizationService {
             if (precision == 0.0) {
                 precision = 0.1f;
             }
-            System.out.println("precision " + precision);
         } while (minimalOptimization > 0.0001);
-
-        System.out.println("Result Array:");
-
-        roundListValues(optimizedValues, 2).forEach(element -> System.out.print(element + "  "));
-        System.out.println("Sum of optimizedValues array " + MinimizationUtils.round(optimizedValues.stream().reduce(0f, Float::sum), 2));
-        System.out.println("minimizationFunction " + MinimizationUtils.round(minimizationFunction(optimizedValues), 2));
 
         return generateTasksOptimizationResults();
     }
@@ -125,7 +112,6 @@ public class MinimizationServiceImpl implements MinimizationService {
             }
 
             staticStep *= 2;
-            System.out.println("staticStep " + staticStep);
         }
 
         return minimalOptimization;

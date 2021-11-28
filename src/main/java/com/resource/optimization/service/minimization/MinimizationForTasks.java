@@ -6,7 +6,6 @@ import com.resource.optimization.entity.Project;
 import com.resource.optimization.entity.ProjectOptimization;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,16 +15,7 @@ public class MinimizationForTasks {
     Integer numberOfStages;
     Float eps;
 
-//    List<Float> minRangeValues = Arrays.asList(1f, 1f, 10f, 10f, 10f);
-//
-//    List<Float> sk = Arrays.asList(460f, 360f, 302f, 490f, 388f);
-
-//    List<Float> minRangeValues = Arrays.asList(1f, 1f, 10f, 10f, 10f);
-
-    //    List<Float> sk = Arrays.asList(460f, 360f, 302f, 490f, 388f);
-    List<Float> sk; //= Arrays.asList(462.35f, 354.89f, 487.12f, 295.04f, 400.65f);
-
-//    List<Float> maxRangeValues = sk;
+    List<Float> sk;
 
     List<PhaseOptimizationItem> phaseOptimizationItems;
     List<List<Float>> optimizedResourcesValues;
@@ -63,17 +53,9 @@ public class MinimizationForTasks {
                                 .getMaximumImplementationCost())
                         .collect(Collectors.toList())));
 
-//        for (int k = 0; k < numberOfTasks; ++k) {
-//            optimizedResourcesValues.add();
-//        }
-
         for (int k = 0; k < phaseOptimizationItems.size(); ++k) {
             optimizedResourcesValues.add(roundListValues(generateValuesForOptimization(minRangeValues.get(k), maxRangeValues.get(k)), 2));
         }
-//        optimizedResourcesValues.add(Arrays.asList(169.56f, 51.99f, 13.34f, 111.05f, 178.21f));
-//        optimizedResourcesValues.add(Arrays.asList(130.63f, 62.07f, 0.0f, 16.46f, 164.14f));
-//        optimizedResourcesValues.add(Arrays.asList(141.06f, 122.34f, 204.3f, 69.01f, 0.0f));
-        System.out.println("Test");
     }
 
 
@@ -83,43 +65,9 @@ public class MinimizationForTasks {
             System.out.println();
         });
 
-        System.out.println("Sum of optimizedResourcesValues array " + optimizedResourcesValues.stream()
-                .flatMap(List::stream)
-                .reduce(0f, Float::sum));
-
         float initialOptimizationFunction = minimizationFunction(optimizedResourcesValues);
-        System.out.println("initialOptimizationFunction " + initialOptimizationFunction);
 
         getMinimalOptimizationResult(initialOptimizationFunction);
-
-        System.out.println("Result Array:");
-
-        for (int k = 0; k < numberOfStages; ++k) {
-            System.out.print("Task #" + (k + 1) + " ");
-            roundListValues(optimizedResourcesValues.get(k), 2).forEach(element -> System.out.print(element + "  "));
-            System.out.print("  Sum " + MinimizationUtils.round(optimizedResourcesValues.get(k).stream().reduce(0f, Float::sum), 2));
-
-            System.out.println();
-        }
-
-        System.out.print("Sum  ");
-        for (int k = 0; k < numberOfStages; ++k) {
-            float sumForStage = 0f;
-            for (int t = 0; t < optimizedResourcesValues.get(k).size(); ++t) {
-                sumForStage += optimizedResourcesValues.get(k).get(t);
-            }
-            System.out.print(MinimizationUtils.round(sumForStage, 2) + "  ");
-        }
-        System.out.println();
-
-
-        float sumOptimized = optimizedResourcesValues.stream()
-                .flatMap(List::stream)
-                .reduce(0f, Float::sum);
-
-        System.out.println("Sum of optimizedValues array " + MinimizationUtils.round(sumOptimized, 2));
-
-        System.out.println("minimizationFunction " + MinimizationUtils.round(minimizationFunction(optimizedResourcesValues), 2));
 
         return generateTasksOptimizationResults();
     }
