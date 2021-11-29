@@ -1,5 +1,6 @@
 package com.resource.optimization.security.dto;
 
+import com.resource.optimization.entity.enums.RoleName;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -11,12 +12,14 @@ public class JwtResponseDto implements Serializable {
     private final String username;
     private final String accessToken;
     private final String refreshToken;
+    private final RoleName role;
 
-    public JwtResponseDto(String accessToken, String refreshToken, Long id, String username) {
+    public JwtResponseDto(String accessToken, String refreshToken, Long id, String username, RoleName role) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.id = id;
         this.username = username;
+        this.role = role;
     }
 
 }

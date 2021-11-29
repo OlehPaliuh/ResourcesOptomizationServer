@@ -32,13 +32,13 @@ public class AuthenticationService {
         authenticate(request.getUsername(), request.getPassword());
         Account userDetails = userDetailsService.getByUsername(request.getUsername());
         if (userDetails.isDisabled()) {
-            throw new UserDisabledException(" Mail has already sent. Confirm account.");
+            throw new UserDisabledException(" Account disabled. Contact system administrator.");
         }
         if (userDetails.isLocked()) {
             throw new AccountLockedException("This account is locked, contact administrator.");
         }
         return new JwtResponseDto(jwtTokenUtil.generateAccessToken(userDetails), jwtTokenUtil.generateRefreshToken(userDetails),
-                                  userDetails.getId(), userDetails.getUsername());
+                                  userDetails.getId(), userDetails.getUsername(), userDetails.getRole());
     }
 
     private void authenticate(String username, String password) throws Exception {

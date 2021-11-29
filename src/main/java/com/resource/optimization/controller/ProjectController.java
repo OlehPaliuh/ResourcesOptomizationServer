@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = "/api/user/projects")
+@RequestMapping(path = "/api")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -29,38 +29,46 @@ public class ProjectController {
     }
 
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    @GetMapping(path = "/{projectId}", produces = "application/json")
+    @GetMapping(path = "/user/projects/{projectId}", produces = "application/json")
     public @ResponseBody
     ResponseEntity<Project> getProjectsById(@PathVariable Long projectId) {
         return new ResponseEntity<>(projectService.getProjectById(projectId), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    @GetMapping(produces = "application/json")
+    @GetMapping(path = "/user/projects", produces = "application/json")
     public @ResponseBody
-    ResponseEntity<List<Project>> getAllProjects() {
+    ResponseEntity<List<Project>> getAllProjectsByUser() {
         System.out.println("getAllProjects request");
-        return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
+        return new ResponseEntity<>(projectService.getAllProjectsByUserId(), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(path = "/user/projects", produces = "application/json", consumes = "application/json")
     public @ResponseBody
     Project createProject(@Valid @RequestBody CreateProjectDto projectDto) {
         return projectService.createProject(projectDto);
     }
 
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    @PutMapping(path = "/{projectId}", produces = "application/json", consumes = "application/json")
+    @PutMapping(path = "/user/projects/{projectId}", produces = "application/json", consumes = "application/json")
     public @ResponseBody
     ResponseEntity<Project> updateProject(@PathVariable Long projectId, @RequestBody CreateProjectDto projectDto) {
         return new ResponseEntity<>(projectService.updateProject(projectDto, projectId), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    @DeleteMapping(path = "/{projectId}")
+    @DeleteMapping(path = "/user/projects/{projectId}")
     public @ResponseBody
     void deleteProject(@PathVariable Long projectId) {
         projectService.deleteProject(projectId);
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @GetMapping(path = "/admin/projects", produces = "application/json")
+    public @ResponseBody
+    ResponseEntity<List<Project>> getAllProjects() {
+        System.out.println("getAllProjects request");
+        return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
     }
 }

@@ -8,6 +8,7 @@ import com.resource.optimization.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
@@ -26,7 +27,7 @@ public class AuthenticationController {
     private SecurityServiceImpl securityService;
 
     @PostMapping(path = "/register")
-    public ResponseEntity<Object> registration(@RequestBody RegisterAccountDto account) throws Exception {
+    public ResponseEntity<Object> registration(@Validated @RequestBody RegisterAccountDto account) throws Exception {
         accountService.createAccount(account);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

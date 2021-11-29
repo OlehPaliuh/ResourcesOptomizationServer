@@ -1,5 +1,7 @@
 package com.resource.optimization.exception;
 
+import com.resource.optimization.exception.common.BadRequestException;
+import com.resource.optimization.exception.common.ConflictException;
 import com.resource.optimization.exception.common.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
@@ -28,6 +30,30 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         body.put("status", NOT_FOUND.value());
 
         return new ResponseEntity<>(body, NOT_FOUND);
+    }
+
+    @ExceptionHandler(com.resource.optimization.exception.common.ConflictException.class)
+    @ResponseStatus(CONFLICT)
+    public ResponseEntity<Object> handleUserNotFoundException(ConflictException ex) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+        body.put("status", CONFLICT.value());
+
+        return new ResponseEntity<>(body, CONFLICT);
+    }
+
+    @ExceptionHandler(com.resource.optimization.exception.common.BadRequestException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ResponseEntity<Object> handleUserNotFoundException(BadRequestException ex) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+        body.put("status", BAD_REQUEST.value());
+
+        return new ResponseEntity<>(body, BAD_REQUEST);
     }
 
     @ExceptionHandler(IncorrectCredentialsException.class)

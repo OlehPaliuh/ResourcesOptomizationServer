@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/resource-optimization</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="Dev Postgress" uuid="3c8cebd7-059f-4044-b075-091d52daec90">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ec2-34-250-16-127.eu-west-1.compute.amazonaws.com:5432/d42ij0afg3jdfa</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

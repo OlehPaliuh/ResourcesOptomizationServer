@@ -7,6 +7,9 @@ import com.resource.optimization.repository.AccountRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService {
 
@@ -22,6 +25,17 @@ public class UserService {
         Account account = accountRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format("User with id %s not found", userId)));
 
-        return  modelMapper.map(account, AccountInfoDto.class);
+        return modelMapper.map(account, AccountInfoDto.class);
+    }
+
+    public Account getAccountByUsername(String username) {
+        return accountRepository.getAccountByUsername(username)
+                .orElseThrow(() -> new NotFoundException(String.format("User with username %s not found", username)));
+    }
+
+    public List<AccountInfoDto> getAllUsers() {
+        return accountRepository.findAll().stream()
+                .map(account -> modelMapper.map(account, AccountInfoDto.class))
+                .collect(Collectors.toList());
     }
 }

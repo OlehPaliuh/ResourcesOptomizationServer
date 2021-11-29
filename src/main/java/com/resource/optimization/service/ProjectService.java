@@ -9,6 +9,8 @@ import com.resource.optimization.service.minimization.MinimizationForTasks;
 import com.resource.optimization.service.minimization.MinimizationService;
 import com.resource.optimization.service.minimization.MinimizationServiceImpl;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,21 +25,30 @@ public class ProjectService {
     private final ProjectOptimizationService projectOptimizationService;
     private final PhaseOptimizationItemService phaseOptimizationItemService;
     private final ProjectRepository projectRepository;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
     public ProjectService(OptimizationItemService optimizationItemService,
                           ProjectOptimizationService projectOptimizationService,
                           PhaseOptimizationItemService phaseOptimizationItemService, ProjectRepository projectRepository,
-                          ModelMapper modelMapper) {
+                          UserService userService, ModelMapper modelMapper) {
         this.optimizationItemService = optimizationItemService;
         this.projectOptimizationService = projectOptimizationService;
         this.phaseOptimizationItemService = phaseOptimizationItemService;
         this.projectRepository = projectRepository;
+        this.userService = userService;
         this.modelMapper = modelMapper;
     }
 
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
+    }
+
+    public List<Project> getAllProjectsByUserId() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+        return projectRepository.findAllByOwner(userService.getAccountByUsername(username));
     }
 
     public Project getProjectById(Long projectId) {
@@ -46,8 +57,13 @@ public class ProjectService {
     }
 
     public Project createProject(CreateProjectDto projectDto) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+        System.out.println("Username " + username);
         System.out.println("projectDto: " + projectDto.toString());
         Project project = modelMapper.map(projectDto, Project.class);
+        project.setOwner(userService.getAccountByUsername(username));
         return projectRepository.save(project);
     }
 

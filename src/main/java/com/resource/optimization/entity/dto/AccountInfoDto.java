@@ -12,7 +12,12 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class AccountInfoDto {
 
-    private boolean isLocked = false;
+    private Long id;
+
+    private boolean isDisabled;
+
+    private boolean isLocked;
+
     private String lockReason;
 
     private RoleName role;
