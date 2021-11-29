@@ -27,7 +27,7 @@ public class AuthenticationController {
     private SecurityServiceImpl securityService;
 
     @PostMapping(path = "/register")
-    public ResponseEntity<Object> registration(@Validated @RequestBody RegisterAccountDto account) throws Exception {
+    public ResponseEntity<Object> registration(@RequestBody RegisterAccountDto account) throws Exception {
         accountService.createAccount(account);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
