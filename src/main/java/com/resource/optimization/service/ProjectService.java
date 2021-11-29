@@ -8,6 +8,7 @@ import com.resource.optimization.repository.ProjectRepository;
 import com.resource.optimization.service.minimization.MinimizationForTasks;
 import com.resource.optimization.service.minimization.MinimizationService;
 import com.resource.optimization.service.minimization.MinimizationServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ProjectService {
 
     private final OptimizationItemService optimizationItemService;
@@ -92,12 +94,24 @@ public class ProjectService {
             }
         });
 
+        System.out.println("Start Optimization");
+
+        long startTime = System.nanoTime();
+
+
         MinimizationService minimizationService = new MinimizationServiceImpl(phaseOptimizationItems, project.getFinalCost());
         List<PhaseOptimizationItem> resultPhaseOptimizationItems = minimizationService.calculateMinimization();
 
         MinimizationForTasks minimizationForTasks = new MinimizationForTasks(resultPhaseOptimizationItems, project);
         ProjectOptimization projectOptimization = minimizationForTasks.calculateMinimization();
 
+        System.out.println("End Optimization");
+        long endTime = System.nanoTime();
+
+        long duration = (endTime - startTime) / 1000000;
+
+        System.out.println("Execution Time in milliseconds " + duration);
+        log.info("Execution Time in milliseconds " + duration);
         // Delete old project optimizations
         projectOptimizationService.deleteProjectOptimizationsByProjectId(projectId);
 
